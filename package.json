@@ -56,7 +56,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "fastify": "^3.22.0",
-    "fastify-jwt": "^3.1.0",
+    "fastify-jwt": "^4.0.1",
     "husky": "^7.0.2",
     "prettier": "^2.4.1",
     "sinon": "^11.1.2",
