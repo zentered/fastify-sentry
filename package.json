@@ -55,7 +55,7 @@
     "eslint-plugin-markdown": "^2.2.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "fastify": "^3.22.0",
+    "fastify": "^4.2.0",
     "fastify-jwt": "^3.1.0",
     "husky": "^7.0.2",
     "prettier": "^2.4.1",
