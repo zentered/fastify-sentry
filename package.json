@@ -59,7 +59,7 @@
     "fastify-jwt": "^4.2.0",
     "husky": "^8.0.2",
     "prettier": "^2.7.1",
-    "sinon": "^14.0.2",
+    "sinon": "^15.0.1",
     "tap": "^16.3.1"
   },
   "engines": {
