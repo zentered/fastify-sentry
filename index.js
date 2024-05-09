@@ -11,7 +11,8 @@ const extractRequestData = require('./lib/extractRequestData.js')
  *  dsn: string,
  *  tracing: boolean = false,
  *  errorHandler?: (error: Error, request: import('fastify').FastifyRequest, reply: import('fastify').FastifyReply) => void,
- *  errorFilter?: (error: Error, request: import('fastify').FastifyRequest) => boolean
+ *  errorFilter?: (error: Error, request: import('fastify').FastifyRequest) => boolean,
+ *  integrations?: Sentry.NodeOptions['integrations']
  * }} opts
  * @param {function} next
  * @returns {void}
@@ -26,7 +27,8 @@ function sentryConnector(fastify, opts, next) {
       new Sentry.Integrations.Http({ tracing: true }),
       new Tracing.Integrations.Express({
         fastify
-      })
+      }),
+      ...(opts.integrations ?? [])
     ]
   }
 
@@ -70,8 +72,9 @@ function sentryConnector(fastify, opts, next) {
   })
 
   fastify.setErrorHandler((error, request, reply) => {
-    if (opts.errorFilter && ! opts.errorFilter(error, request)) {
-      process.env.NODE_ENV !== 'production' && console.warn('Error not reported to Sentry', error)
+    if (opts.errorFilter && !opts.errorFilter(error, request)) {
+      process.env.NODE_ENV !== 'production' &&
+        console.warn('Error not reported to Sentry', error)
     } else {
       Sentry.withScope((scope) => {
         if (request && request.user && request.user.sub) {
