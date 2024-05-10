@@ -22,14 +22,15 @@ function sentryConnector(fastify, opts, next) {
     return next(new Error('Sentry DSN is required.'))
   }
 
+  opts.integrations = opts.integrations ?? []
+
   if (opts.tracing === true) {
-    opts.integrations = [
+    opts.integrations.push(
       new Sentry.Integrations.Http({ tracing: true }),
       new Tracing.Integrations.Express({
         fastify
-      }),
-      ...(opts.integrations ?? [])
-    ]
+      })
+    )
   }
 
   Sentry.init(opts)
