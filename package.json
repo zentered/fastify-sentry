@@ -44,7 +44,7 @@
     ]
   },
   "dependencies": {
-    "@sentry/node": "^7.105.0",
+    "@sentry/node": "^8.7.0",
     "@sentry/tracing": "^7.105.0",
     "fastify-plugin": "^4.5.1"
   },
