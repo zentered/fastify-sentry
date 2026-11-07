@@ -4,6 +4,40 @@
 [![Semantic Release](https://github.com/zentered/fastify-sentry/actions/workflows/publish.yml/badge.svg)](https://github.com/zentered/fastify-sentry/actions/workflows/publish.yml)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
+> [!WARNING]
+> **This package is deprecated.** Use the Sentry SDK's built-in Fastify support instead: [`fastifyIntegration`](https://docs.sentry.io/platforms/javascript/guides/fastify/) from `@sentry/node`.
+> This plugin calls `Sentry.startTransaction`, `Sentry.Integrations.Http` and `@sentry/tracing`. Sentry removed all three in v8.
+>
+> Migrate:
+>
+> ```bash
+> npm uninstall @zentered/fastify-sentry
+> npm install @sentry/node
+> ```
+>
+> For `@sentry/node` v11:
+>
+> ```js
+> // instrument.js - load it first: node --import ./instrument.js app.js
+> const Sentry = require('@sentry/node')
+>
+> Sentry.init({
+>   dsn: process.env.SENTRY_DSN,
+>   environment: 'development',
+>   tracesSampleRate: 1.0,
+>   integrations: [
+>     Sentry.fastifyIntegration({
+>       // replaces errorFilter
+>       shouldHandleError: (error, request, reply) => reply.statusCode >= 500
+>     })
+>   ]
+> })
+> ```
+>
+> Remove the `app.register(fastifySentry, ...)` call.
+>
+> On `@sentry/node` v8, `fastifyIntegration()` takes no options, so `shouldHandleError` has no effect. Use `integrations: [Sentry.fastifyIntegration()]` and call `Sentry.setupFastifyErrorHandler(app)` after creating the app, or no Fastify errors are captured. See the [Sentry Fastify guide](https://docs.sentry.io/platforms/javascript/guides/fastify/) and the [v7 to v8 migration guide](https://docs.sentry.io/platforms/javascript/guides/node/migration/v7-to-v8/).
+
 ## Installation
 
 ```bash
