@@ -15,6 +15,8 @@
 > npm install @sentry/node
 > ```
 >
+> For `@sentry/node` v11:
+>
 > ```js
 > // instrument.js - load it first: node --import ./instrument.js app.js
 > const Sentry = require('@sentry/node')
@@ -32,7 +34,9 @@
 > })
 > ```
 >
-> Remove the `app.register(fastifySentry, ...)` call. On `@sentry/node` v8, also call `Sentry.setupFastifyErrorHandler(app)` after creating the app. See the [Sentry Fastify guide](https://docs.sentry.io/platforms/javascript/guides/fastify/) and the [v7 to v8 migration guide](https://docs.sentry.io/platforms/javascript/guides/node/migration/v7-to-v8/).
+> Remove the `app.register(fastifySentry, ...)` call.
+>
+> On `@sentry/node` v8, `fastifyIntegration()` takes no options, so `shouldHandleError` has no effect. Use `integrations: [Sentry.fastifyIntegration()]` and call `Sentry.setupFastifyErrorHandler(app)` after creating the app, or no Fastify errors are captured. See the [Sentry Fastify guide](https://docs.sentry.io/platforms/javascript/guides/fastify/) and the [v7 to v8 migration guide](https://docs.sentry.io/platforms/javascript/guides/node/migration/v7-to-v8/).
 
 ## Installation
 
